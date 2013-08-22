@@ -1,4 +1,6 @@
-﻿using FunnyJokesPortableClassLibrary.Services;
+﻿using FunnyJokesPortableClassLibrary.Contracts.Models;
+using FunnyJokesPortableClassLibrary.Models;
+using FunnyJokesPortableClassLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,8 +18,14 @@ namespace FunnyJokesFormsTest
         public Form1()
         {
             InitializeComponent();
+
+            test();
+        }
+
+        public async void test()
+        {
             FunnyJokesRestDataService s = new FunnyJokesRestDataService();
-            s.getJokesByCategory("");
+            List<IJoke> jokes = await s.getJokesByCategory("adu_eng", 300, 2);
         }
     }
 }
