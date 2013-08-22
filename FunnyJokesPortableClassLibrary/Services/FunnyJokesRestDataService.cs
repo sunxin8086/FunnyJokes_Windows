@@ -21,6 +21,7 @@ namespace FunnyJokesPortableClassLibrary.Services
         private static readonly string commentsResource = "people";
         private static readonly string likesResource = "likes";
         private static readonly string categoriesResource = "categories";
+        private static readonly string serverDateFormat = "yyyy-MM-dd hh:mm:ss";
 
         private static readonly int maxDays = 365 * 3;
         HttpClient http = new HttpClient() { BaseAddress = new Uri(serverAddress) };
@@ -70,8 +71,8 @@ namespace FunnyJokesPortableClassLibrary.Services
             DateTime start = DateTime.Now;
             DateTime end = start.AddDays(-days);
 
-            string startStr = start.ToString("yyyy-MM-dd hh:mm:ss");
-            string endStr = end.ToString("yyyy-MM-dd hh:mm:ss");
+            string startStr = start.ToString(serverDateFormat);
+            string endStr = end.ToString(serverDateFormat);
 
             return String.Format("\"created\" : {{\"$lt\" : \"{0}\", \"$gt\" : \"{1}\"}}", startStr, endStr); 
         }
