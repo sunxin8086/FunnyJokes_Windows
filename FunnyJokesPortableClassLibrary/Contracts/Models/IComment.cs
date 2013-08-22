@@ -5,7 +5,14 @@ using System.Text;
 
 namespace FunnyJokesPortableClassLibrary.Contracts.Models
 {
-    interface IComment
+    public interface IComment
     {
+        string Id { get; set; }
+        string Etag { get; set; }
+        string JokeId { get; set; }
+        string AuthorId { get; set; }
+        string Content { get; set; }
+        DateTime Updated { get; set; }
+        DateTime Created { get; set; }
     }
 }

@@ -37,14 +37,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Contracts\Models\ICategory.cs" />
     <Compile Include="Contracts\Models\IComment.cs" />
     <Compile Include="Contracts\Models\IJoke.cs" />
     <Compile Include="Contracts\Models\ILike.cs" />
     <Compile Include="Contracts\Models\IPerson.cs" />
     <Compile Include="Contracts\Services\IFunnyJokesDataService.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Joke.cs" />
+    <Compile Include="Models\Like.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FunnyJokesRestDataService.cs" />
   </ItemGroup>
