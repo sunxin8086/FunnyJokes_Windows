@@ -2,6 +2,7 @@
 using FunnyJokesPortableClassLibrary.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
@@ -41,7 +42,7 @@ namespace W8
         public async void test()
         {
             FunnyJokesRestDataService s = new FunnyJokesRestDataService();
-            List<IJoke> jokes = await s.getJokesByCategory("adu_eng", 0, 2);
+            ObservableCollection<IJoke> jokes = await s.getJokesByCategory("adu_eng", 0, 2);
         }
     }
 }

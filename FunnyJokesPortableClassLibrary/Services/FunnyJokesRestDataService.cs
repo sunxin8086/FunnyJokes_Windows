@@ -1,6 +1,7 @@
 ﻿using FunnyJokesPortableClassLibrary.Contracts.Models;
 using FunnyJokesPortableClassLibrary.Contracts.Services;
 using FunnyJokesPortableClassLibrary.Models;
+using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -23,10 +24,17 @@ namespace FunnyJokesPortableClassLibrary.Services
         private static readonly string categoriesResource = "categories";
         private static readonly string serverDateFormat = "yyyy-MM-dd hh:mm:ss";
 
+        private ILoggingService logger;
+
         private static readonly int maxDays = 365 * 3;
         HttpClient http = new HttpClient() { BaseAddress = new Uri(serverAddress) };
 
-        public async Task<List<IJoke>> getJokesByCategory(string category, int days = 0, int page = 1)
+        public FunnyJokesRestDataService()
+        {
+            this.logger = ServiceLocator.Current.GetInstance<ILoggingService>();
+        }
+
+        public async Task<ObservableCollection<IJoke>> getJokesByCategory(string category, int days = 0, int page = 1)
         {
             string where = string.Format("\"category\" : \"{0}\"", category);
             string dayRange = getDayRangeFromDays(days);
@@ -41,21 +49,22 @@ namespace FunnyJokesPortableClassLibrary.Services
                 sort = "[(\"created\" , -1)]";
 
             List<Joke> items = await this.getResource<Joke>(jokesResource, where, sort, page);
-            /*ObservableCollection<IJoke> jokes = new ObservableCollection<IJoke>();
+            ObservableCollection<IJoke> jokes = new ObservableCollection<IJoke>();
             foreach (Joke joke in items)
             {
                 jokes.Add(joke);
-            }*/
-            return items.Cast<IJoke>().ToList();
+            }
+            return jokes;
         }
 
 
         private async Task<List<T>> getResource<T>(string resource, string where, string sort, int page = 1)
         {
             String uri = String.Format("{0}?where={1}&sort={2}&page={3}", resource, where, sort, page);
-            var response = http.GetAsync(uri).Result;
-            response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
+            var json = await http.GetStringAsync(uri);//.Result;
+            //response.EnsureSuccessStatusCode();
+            //string json = await response.Content.ReadAsStringAsync();
+            this.logger.Debug(json);
             JObject rootObject = JObject.Parse(json);
             var items = rootObject["_items"];
             List<T> jokes = items.ToObject<List<T>>();
