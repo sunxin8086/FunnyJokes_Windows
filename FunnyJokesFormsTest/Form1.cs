@@ -25,7 +25,7 @@ namespace FunnyJokesFormsTest
         public async void test()
         {
             FunnyJokesRestDataService s = new FunnyJokesRestDataService();
-            List<IJoke> jokes = await s.getJokesByCategory("adu_eng", 0, 2);
+           // Observ<IJoke> jokes = await s.getJokesByCategory("adu_eng", 0, 2);
         }
     }
 }
