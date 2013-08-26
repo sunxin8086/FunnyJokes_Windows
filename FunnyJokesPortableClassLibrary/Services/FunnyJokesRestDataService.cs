@@ -24,6 +24,10 @@ namespace FunnyJokesPortableClassLibrary.Services
         private static readonly string categoriesResource = "categories";
         private static readonly string serverDateFormat = "yyyy-MM-dd hh:mm:ss";
 
+        private const int defaultPageSize = 25;
+        private static readonly int topJokersNumber = 9;
+        private static readonly int categoriesPageSize = 50;
+
         private ILoggingService logger;
 
         private static readonly int maxDays = 365 * 3;
@@ -31,10 +35,10 @@ namespace FunnyJokesPortableClassLibrary.Services
 
         public FunnyJokesRestDataService()
         {
-            this.logger = ServiceLocator.Current.GetInstance<ILoggingService>();
+            //this.logger = ServiceLocator.Current.GetInstance<ILoggingService>();
         }
 
-        public async Task<ObservableCollection<IJoke>> getJokesByCategory(string category, int days = 0, int page = 1)
+        public async Task<ObservableCollection<IJoke>> GetJokesByCategory(string category, int days = 0, int page = 1)
         {
             string where = string.Format("\"category\" : \"{0}\"", category);
             string dayRange = getDayRangeFromDays(days);
@@ -48,7 +52,7 @@ namespace FunnyJokesPortableClassLibrary.Services
             else
                 sort = "[(\"created\" , -1)]";
 
-            List<Joke> items = await this.getResource<Joke>(jokesResource, where, sort, page);
+            List<Joke> items = await this.getResource<Joke>(jokesResource, where, sort, defaultPageSize, page);
             ObservableCollection<IJoke> jokes = new ObservableCollection<IJoke>();
             foreach (Joke joke in items)
             {
@@ -57,14 +61,41 @@ namespace FunnyJokesPortableClassLibrary.Services
             return jokes;
         }
 
-
-        private async Task<List<T>> getResource<T>(string resource, string where, string sort, int page = 1)
+        public async Task<ObservableCollection<ICategory>> GetCategories()
         {
-            String uri = String.Format("{0}?where={1}&sort={2}&page={3}", resource, where, sort, page);
+            List<Category> items = await this.getResource<Category>(categoriesResource, "", "", categoriesPageSize);
+            ObservableCollection<ICategory> categories = new ObservableCollection<ICategory>();
+            foreach (Category category in items)
+            {
+                categories.Add(category);
+            }
+            return categories;
+        }
+
+        public async Task<ObservableCollection<IPerson>> GetTopJokers()
+        {
+            string sort = "[(\"jokes_number\" , -1)]";
+            List<Person> items = await this.getResource<Person>(peopleResource, "", "", topJokersNumber);
+            ObservableCollection<IPerson> people = new ObservableCollection<IPerson>();
+            foreach (Person person in items)
+            {
+                people.Add(person);
+            }
+            return people;
+        }
+        
+        public async Task<ObservableCollection<IComment>> GetComments(string jokeId)
+        {
+            return null;
+        }
+
+        private async Task<List<T>> getResource<T>(string resource, string where, string sort, int pageSize = defaultPageSize, int page = 1)
+        {
+            String uri = String.Format("{0}?where={1}&sort={2}&max_results={3}&page={4}", resource, where, sort, pageSize, page);
             var json = await http.GetStringAsync(uri);//.Result;
             //response.EnsureSuccessStatusCode();
             //string json = await response.Content.ReadAsStringAsync();
-            this.logger.Debug(json);
+            //this.logger.Debug(json);
             JObject rootObject = JObject.Parse(json);
             var items = rootObject["_items"];
             List<T> jokes = items.ToObject<List<T>>();

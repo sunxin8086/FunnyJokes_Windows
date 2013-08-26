@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Contracts\Models\ICategory.cs" />
     <Compile Include="Contracts\Models\IComment.cs" />
+    <Compile Include="Contracts\Models\IIndexedPerson.cs" />
     <Compile Include="Contracts\Models\IJoke.cs" />
     <Compile Include="Contracts\Models\ILike.cs" />
     <Compile Include="Contracts\Models\IPerson.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Contracts\Services\INavigationService.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\IndexedPerson.cs" />
     <Compile Include="Models\Joke.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\Person.cs" />
