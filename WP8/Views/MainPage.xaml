@@ -7,6 +7,8 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+    xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8" 
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -31,6 +33,12 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" Width="432" Height="78">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Tap">
+                                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding Mode=OneWay, Source={StaticResource Locator}, Path=Main.NavigateToCategoryJokesPageCommand}"
+                             CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
                                 <StackPanel Orientation="Horizontal" Margin="0,-6,12,0">
                                     <TextBlock Text="{Binding Description}" TextWrapping="Wrap"  Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}" />
@@ -43,6 +51,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+
                 </ListBox>
             </phone:PanoramaItem>
 
