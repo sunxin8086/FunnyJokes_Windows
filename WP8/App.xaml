@@ -5,7 +5,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
 
-    xmlns:vm="clr-namespace:WP8.ViewModels">
+    xmlns:vm="clr-namespace:FunnyJokes.ViewModels">
 
     <!--Application Resources-->
     <Application.Resources>

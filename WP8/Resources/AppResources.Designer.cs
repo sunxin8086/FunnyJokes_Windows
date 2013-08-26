@@ -115,6 +115,60 @@ namespace WP8.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add a joke.
+        /// </summary>
+        public static string Todo_AddJoke {
+            get {
+                return ResourceManager.GetString("Todo_AddJoke", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to email your feedback.
+        /// </summary>
+        public static string Todo_EmailFeedback {
+            get {
+                return ResourceManager.GetString("Todo_EmailFeedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to my profile.
+        /// </summary>
+        public static string Todo_MyProfile {
+            get {
+                return ResourceManager.GetString("Todo_MyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rate this app.
+        /// </summary>
+        public static string Todo_RateApp {
+            get {
+                return ResourceManager.GetString("Todo_RateApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to setting.
+        /// </summary>
+        public static string Todo_Setting {
+            get {
+                return ResourceManager.GetString("Todo_Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to suggest a category.
+        /// </summary>
+        public static string Todo_SuggestCategory {
+            get {
+                return ResourceManager.GetString("Todo_SuggestCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to to-do.
         /// </summary>
         public static string TodosPanoramaItemTitle {

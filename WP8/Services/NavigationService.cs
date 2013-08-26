@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WP8.Services
+namespace FunnyJokes.Services
 {
     public class NavigationService : INavigationService
     {

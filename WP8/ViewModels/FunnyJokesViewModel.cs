@@ -1,18 +1,20 @@
 ﻿using FunnyJokesPortableClassLibrary.Contracts.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
-namespace WP8.ViewModels
+namespace FunnyJokes.ViewModels
 {
     public class FunnyJokesViewModel : ViewModelBase
     {
-        private IFunnyJokesDataService funnyJokesDataService;
-        private INavigationService navigationService;
+        protected IFunnyJokesDataService funnyJokesDataService;
+        protected INavigationService navigationService;
 
         public FunnyJokesViewModel(IFunnyJokesDataService funnyJokesDataService, INavigationService navigationService)
         {
@@ -48,6 +50,23 @@ namespace WP8.ViewModels
         {
             get;
             private set;
+        }
+
+        public bool LightThemeEnabled
+        {
+            get
+            {
+                return (Visibility)Application.Current.Resources["PhoneLightThemeVisibility"] == Visibility.Visible;
+            }
+        }
+
+        protected override void RaisePropertyChanged(string propertyName)
+        {
+            DispatcherHelper.CheckBeginInvokeOnUI(() => base.RaisePropertyChanged(propertyName));
+        }
+        protected override void RaisePropertyChanged<T>(string propertyName, T oldValue, T newValue, bool broadcast)
+        {
+            DispatcherHelper.CheckBeginInvokeOnUI(() => base.RaisePropertyChanged<T>(propertyName, oldValue, newValue, broadcast));
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WP8.Views;
 using System.Diagnostics;
 
-namespace WP8.Services
+namespace FunnyJokes.Services
 {
     public class LoggingService : ILoggingService
     {

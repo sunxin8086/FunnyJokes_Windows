@@ -143,4 +143,22 @@
   <data name="TopJokersPanoramaItemTitle" xml:space="preserve">
     <value>top jokers</value>
   </data>
+  <data name="Todo_AddJoke" xml:space="preserve">
+    <value>add a joke</value>
+  </data>
+  <data name="Todo_EmailFeedback" xml:space="preserve">
+    <value>email your feedback</value>
+  </data>
+  <data name="Todo_MyProfile" xml:space="preserve">
+    <value>my profile</value>
+  </data>
+  <data name="Todo_RateApp" xml:space="preserve">
+    <value>rate this app</value>
+  </data>
+  <data name="Todo_Setting" xml:space="preserve">
+    <value>setting</value>
+  </data>
+  <data name="Todo_SuggestCategory" xml:space="preserve">
+    <value>suggest a category</value>
+  </data>
 </root>

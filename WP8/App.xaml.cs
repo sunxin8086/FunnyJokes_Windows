@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using WP8.Resources;
+using GalaSoft.MvvmLight.Threading;
 
 namespace WP8
 {
@@ -34,6 +35,8 @@ namespace WP8
 
             // Language display initialization
             InitializeLanguage();
+
+            DispatcherHelper.Initialize();
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)

@@ -13,8 +13,8 @@ using FunnyJokesPortableClassLibrary.Contracts.Models;
 using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight.Ioc;
 using FunnyJokesPortableClassLibrary.Contracts.Services;
-using WP8.ViewModels;
-using WP8.Services;
+using FunnyJokes.ViewModels;
+using FunnyJokes.Services;
 
 namespace WP8.Views
 {
@@ -29,8 +29,8 @@ namespace WP8.Views
 
         public async void test()
         {
-            FunnyJokesRestDataService s = new FunnyJokesRestDataService();
-            ObservableCollection<IJoke> jokes = await s.getJokesByCategory("adu_eng", 0, 2);
+            //FunnyJokesRestDataService s = new FunnyJokesRestDataService();
+            //ObservableCollection<IJoke> jokes = await s.GetJokesByCategory("adu_eng", 0, 2);
         }
     }
 }

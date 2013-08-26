@@ -24,6 +24,7 @@ namespace W8
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private ObservableCollection<ICategory> categories;
         public MainPage()
         {
             this.InitializeComponent();
@@ -42,7 +43,11 @@ namespace W8
         public async void test()
         {
             FunnyJokesRestDataService s = new FunnyJokesRestDataService();
-            ObservableCollection<IJoke> jokes = await s.getJokesByCategory("adu_eng", 0, 2);
+            var t = s.GetCategories();
+            t.ContinueWith(task => { 
+               categories = t.Result; 
+            });
+            //t.Start();
         }
     }
 }

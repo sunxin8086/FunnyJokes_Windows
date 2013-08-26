@@ -9,8 +9,8 @@ using Microsoft.Practices.ServiceLocation;
 using GalaSoft.MvvmLight;
 using FunnyJokesPortableClassLibrary.Contracts.Services;
 using FunnyJokesPortableClassLibrary.Services;
-using WP8.Services;
-namespace WP8.ViewModels
+using FunnyJokes.Services;
+namespace FunnyJokes.ViewModels
 {
    /// <summary>
     /// This class contains static references to all the view models in the
@@ -24,7 +24,7 @@ namespace WP8.ViewModels
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            SimpleIoc.Default.Register<INavigationService, WP8.Services.NavigationService>();
+            SimpleIoc.Default.Register<INavigationService, FunnyJokes.Services.NavigationService>();
             SimpleIoc.Default.Register<ILoggingService, LoggingService>();
             SimpleIoc.Default.Register<IFunnyJokesDataService, FunnyJokesRestDataService>();
             SimpleIoc.Default.Register<MainPageViewModel>();
