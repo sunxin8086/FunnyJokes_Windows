@@ -9,6 +9,7 @@ namespace FunnyJokesPortableClassLibrary.Contracts.Services
     {
         void Navigate(Type sourcePageType);
         void Navigate(Type sourcePageType, object parameter);
+        void NavigateTo(Uri pageUri);
         void GoBack();
     }
 }
