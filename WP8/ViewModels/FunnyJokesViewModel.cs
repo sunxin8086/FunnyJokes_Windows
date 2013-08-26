@@ -1,13 +1,16 @@
-﻿using FunnyJokesPortableClassLibrary.Contracts.Services;
+﻿using FunnyJokesPortableClassLibrary.Contracts.Models;
+using FunnyJokesPortableClassLibrary.Contracts.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Threading;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WP8.Views;
 
 namespace FunnyJokes.ViewModels
 {
@@ -20,36 +23,49 @@ namespace FunnyJokes.ViewModels
         {
             this.funnyJokesDataService = funnyJokesDataService;
             this.navigationService = navigationService;
+
+            this.NavigateToCategoryJokesPageCommand = new RelayCommand<ICategory>((category)=>
+            {
+                JokesPageViewModel vm = ServiceLocator.Current.GetInstance<JokesPageViewModel>();
+                vm.Category = category;
+                this.navigationService.NavigateTo(new Uri("/Views/JokesPage.xaml", UriKind.RelativeOrAbsolute));
+            });
+        }
+
+        public RelayCommand LoadedCommand
+        {
+            get;
+            protected set;
         }
 
         public RelayCommand NavigateToPersonPageCommand
         {
             get;
-            private set;
+            protected set;
         }
 
         public RelayCommand NavigateToCategoryPageCommand
         {
             get;
-            private set;
+            protected set;
         }
 
-        public RelayCommand NavigateToJokePageCommand
+        public RelayCommand<ICategory> NavigateToCategoryJokesPageCommand
         {
             get;
-            private set;
+            protected set;
         }
 
         public RelayCommand NavigateToHelpPageCommand
         {
             get;
-            private set;
+            protected set;
         }
 
         public RelayCommand NavigateToSettingPageCommand
         {
             get;
-            private set;
+            protected set;
         }
 
         public bool LightThemeEnabled

@@ -1,5 +1,6 @@
 ﻿using FunnyJokes.ViewModels;
 using FunnyJokesPortableClassLibrary.Contracts.Models;
+using FunnyJokesPortableClassLibrary.Contracts.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,39 +8,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WP8.ViewModels
+namespace FunnyJokes.ViewModels
 {
     public class JokesPivotViewModel : FunnyJokesViewModel
     {
-        public string DurationName { get; set; }
-        private string shortCategory;
+        
+        private string shortCategoryName;
         private int days;
+        private int page = 1;
 
-        public JokesPivotViewModel(int days)
+
+        public JokesPivotViewModel(string shortCategoryName, int days, IFunnyJokesDataService funnyJokesDataService, INavigationService navigationService)
+            : base(funnyJokesDataService, navigationService)
         {
-            this.DurationName = DurationName;
-            switch (DurationName)
-            {
-                case "latest":
-                    days = 1001;
-                    break;
-                case "daily":
-                    days = 1;
-                    break;
-                case "weekly":
-                    days = 7;
-                    break;
-                case "monthly":
-                    days = 30;
-                    break;
-                case "all":
-                    days = 999;
-                    break;
-                default:
-                    days = 1;
-                    break;
-            }
+            this.shortCategoryName = shortCategoryName;
+            this.days = days;
         }
+        public string PivotName
+        {
+            get
+            {
+                switch (days)
+                {
+                    case 0: return "latest";
+                    case 1: return "daily";
+                    case 7: return "weekly";
+                    case 30: return "monthly";
+                    case 300: return "all time";
+                    default: return "all time";
+                }
+            }
+
+        }
+
+
         private ObservableCollection<IJoke> jokes;
         public ObservableCollection<IJoke> Jokes
         {
@@ -60,39 +62,30 @@ namespace WP8.ViewModels
 
         
 
-        public void LoadData()
+        public async void LoadData()
         {
-            this.IsProgressBarVisible = true;
             Jokes.Clear();
-            jokesContext.Page = 0;
-            service.GetJokesByTimeAsync(ShortCategory, days, jokesContext.Page, jokesContext.Size);
+            page = 1;
+            ObservableCollection<IJoke>  newJokes = await funnyJokesDataService.GetJokesByCategory(shortCategoryName, days, page);
+            foreach (IJoke joke in newJokes)
+            {
+                Jokes.Add(joke);
+            }
+
+            page ++;
+            this.RaisePropertyChanged("Jokes");
         }
 
-        public void LoadMoreData()
+        public async void LoadMoreData()
         {
-            if (this.Jokes != null && this.jokesContext.Continuation && !this.IsProgressBarVisible)
+            ObservableCollection<IJoke> newJokes = await funnyJokesDataService.GetJokesByCategory(shortCategoryName, days, page);
+            foreach (IJoke joke in newJokes)
             {
-                this.IsProgressBarVisible = true;
-                service.GetJokesByTimeAsync(ShortCategory, days, jokesContext.Page, jokesContext.Size);
+                Jokes.Add(joke);
             }
-        }
 
-        void jokes_LoadCompleted(object sender, GetJokesByTimeCompletedEventArgs e)
-        {
-            this.IsProgressBarVisible = false;
-            if (e.Error == null)
-            {
-                foreach (Joke joke in e.Result)
-                {
-                    Jokes.Add(joke);
-                }
-                jokesContext.Page++;
-                jokesContext.Continuation = e.Result.Count == jokesContext.Size;
-                this.NotifyPropertyChanged("Jokes");
-
-            }
-            else
-                MessageBox.Show(string.Format("An error has occured: {0}", e.Error.Message));
+            page++;
+            this.RaisePropertyChanged("Jokes");
         }
     }
 }

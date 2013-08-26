@@ -28,6 +28,7 @@ namespace FunnyJokes.ViewModels
             SimpleIoc.Default.Register<ILoggingService, LoggingService>();
             SimpleIoc.Default.Register<IFunnyJokesDataService, FunnyJokesRestDataService>();
             SimpleIoc.Default.Register<MainPageViewModel>();
+            SimpleIoc.Default.Register<JokesPageViewModel>();
         }
 
         public MainPageViewModel Main
@@ -35,6 +36,14 @@ namespace FunnyJokes.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<MainPageViewModel>();
+            }
+        }
+
+        public JokesPageViewModel JokesPage
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<JokesPageViewModel>();
             }
         }
     }
