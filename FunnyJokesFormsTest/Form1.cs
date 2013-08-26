@@ -3,6 +3,7 @@ using FunnyJokesPortableClassLibrary.Models;
 using FunnyJokesPortableClassLibrary.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -15,6 +16,7 @@ namespace FunnyJokesFormsTest
 {
     public partial class Form1 : Form
     {
+        private ObservableCollection<ICategory> categories;
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +27,11 @@ namespace FunnyJokesFormsTest
         public async void test()
         {
             FunnyJokesRestDataService s = new FunnyJokesRestDataService();
-           // Observ<IJoke> jokes = await s.getJokesByCategory("adu_eng", 0, 2);
+            var t = await s.GetCategories();
+            /*t.ContinueWith(task => { 
+               categories = t.Result; 
+            });
+            t.Start();*/
         }
     }
 }
