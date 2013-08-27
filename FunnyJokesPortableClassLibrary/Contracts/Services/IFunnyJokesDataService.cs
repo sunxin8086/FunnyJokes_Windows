@@ -8,8 +8,10 @@ namespace FunnyJokesPortableClassLibrary.Contracts.Services
     public interface IFunnyJokesDataService
     {
         Task<ObservableCollection<IJoke>> GetJokesByCategory(string category, int days = 0, int page = 1);
+        Task<ObservableCollection<IJoke>> GetJokesByPerson(string username, int page = 1);
         Task<ObservableCollection<ICategory>> GetCategories();
         Task<ObservableCollection<IPerson>> GetTopJokers();
+        Task<IPerson> GetProfile(string username);
         Task<ObservableCollection<IComment>> GetComments(string jokeId);
     }
 }

@@ -61,6 +61,21 @@ namespace FunnyJokesPortableClassLibrary.Services
             return jokes;
         }
 
+        public async Task<ObservableCollection<IJoke>> GetJokesByPerson(string username, int page = 1)
+        {
+            string where = string.Format("\"author_id\" : \"{0}\"", "sunxin8086");
+            where = string.Format("{{{0}}}", where);
+            string sort = "[(\"likes_number\" , -1)]";
+
+            List<Joke> items = await this.getResource<Joke>(jokesResource, where, sort, defaultPageSize, page);
+            ObservableCollection<IJoke> jokes = new ObservableCollection<IJoke>();
+            foreach (Joke joke in items)
+            {
+                jokes.Add(joke);
+            }
+            return jokes;
+        }
+
         public async Task<ObservableCollection<ICategory>> GetCategories()
         {
             List<Category> items = await this.getResource<Category>(categoriesResource, "", "", categoriesPageSize);
@@ -83,6 +98,12 @@ namespace FunnyJokesPortableClassLibrary.Services
             }
             return people;
         }
+
+        public async Task<IPerson> GetProfile(string username)
+        {
+            IPerson person = await this.getItem<Person>(peopleResource, username);
+            return person;
+        }
         
         public async Task<ObservableCollection<IComment>> GetComments(string jokeId)
         {
@@ -100,6 +121,18 @@ namespace FunnyJokesPortableClassLibrary.Services
             var items = rootObject["_items"];
             List<T> jokes = items.ToObject<List<T>>();
             return jokes;
+        }
+
+        private async Task<T> getItem<T>(string resource, string id)
+        {
+            String uri = String.Format("{0}/{1}", resource, id);
+            var json = await http.GetStringAsync(uri);//.Result;
+            //response.EnsureSuccessStatusCode();
+            //string json = await response.Content.ReadAsStringAsync();
+            //this.logger.Debug(json);
+            JObject rootObject = JObject.Parse(json);
+            T item = rootObject.ToObject<T>();
+            return item;
         }
 
         private string getDayRangeFromDays(int days = 0)
