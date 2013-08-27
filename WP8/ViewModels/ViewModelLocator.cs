@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight;
 using FunnyJokesPortableClassLibrary.Contracts.Services;
 using FunnyJokesPortableClassLibrary.Services;
 using FunnyJokes.Services;
+using WP8.ViewModels;
 namespace FunnyJokes.ViewModels
 {
    /// <summary>
@@ -29,9 +30,11 @@ namespace FunnyJokes.ViewModels
             SimpleIoc.Default.Register<IFunnyJokesDataService, FunnyJokesRestDataService>();
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<JokesPageViewModel>();
+            SimpleIoc.Default.Register<JokePageViewModel>();
+            SimpleIoc.Default.Register<ProfilePageViewModel>();
         }
 
-        public MainPageViewModel Main
+        public MainPageViewModel MainVM
         {
             get
             {
@@ -39,11 +42,27 @@ namespace FunnyJokes.ViewModels
             }
         }
 
-        public JokesPageViewModel JokesPage
+        public JokesPageViewModel JokesPageVM
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<JokesPageViewModel>();
+            }
+        }
+
+        public JokePageViewModel JokePageVM
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<JokePageViewModel>();
+            }
+        }
+
+        public ProfilePageViewModel ProfilePageVM
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ProfilePageViewModel>();
             }
         }
     }

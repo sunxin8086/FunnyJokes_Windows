@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WP8.ViewModels;
 using WP8.Views;
 
 namespace FunnyJokes.ViewModels
@@ -28,8 +29,40 @@ namespace FunnyJokes.ViewModels
             {
                 JokesPageViewModel vm = ServiceLocator.Current.GetInstance<JokesPageViewModel>();
                 vm.Category = category;
+                vm.Pivots = null;
                 this.navigationService.NavigateTo(new Uri("/Views/JokesPage.xaml", UriKind.RelativeOrAbsolute));
             });
+
+            this.NavigateToJokePageCommand = new RelayCommand<IJoke>((joke) =>
+            {
+                JokePageViewModel vm = ServiceLocator.Current.GetInstance<JokePageViewModel>();
+                vm.CurrentJoke = joke;
+                this.navigationService.NavigateTo(new Uri("/Views/JokePage.xaml", UriKind.RelativeOrAbsolute));
+            });
+
+            this.NavigateToProfilePageCommand = new RelayCommand<string>((username) =>
+            {
+                ProfilePageViewModel vm = ServiceLocator.Current.GetInstance<ProfilePageViewModel>();
+                this.navigationService.NavigateTo(new Uri("/Views/ProfilePage.xaml?username=1", UriKind.RelativeOrAbsolute));
+            });
+        }
+
+        public RelayCommand<IDictionary<string, string>> OnNavigatedToCommand
+        {
+            get;
+            protected set;
+        }
+
+        public RelayCommand OnNavigatedFromCommand
+        {
+            get;
+            protected set;
+        }
+
+        public RelayCommand OnNavigatingFromCommand
+        {
+            get;
+            protected set;
         }
 
         public RelayCommand LoadedCommand
@@ -38,13 +71,19 @@ namespace FunnyJokes.ViewModels
             protected set;
         }
 
-        public RelayCommand NavigateToPersonPageCommand
+        public RelayCommand<string> NavigateToProfilePageCommand
         {
             get;
             protected set;
         }
 
         public RelayCommand NavigateToCategoryPageCommand
+        {
+            get;
+            protected set;
+        }
+
+        public RelayCommand<IJoke> NavigateToJokePageCommand
         {
             get;
             protected set;
@@ -80,6 +119,7 @@ namespace FunnyJokes.ViewModels
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() => base.RaisePropertyChanged(propertyName));
         }
+
         protected override void RaisePropertyChanged<T>(string propertyName, T oldValue, T newValue, bool broadcast)
         {
             DispatcherHelper.CheckBeginInvokeOnUI(() => base.RaisePropertyChanged<T>(propertyName, oldValue, newValue, broadcast));

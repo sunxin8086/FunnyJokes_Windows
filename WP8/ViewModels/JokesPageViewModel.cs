@@ -16,21 +16,20 @@ namespace FunnyJokes.ViewModels
         public const string CategoryPropertyName = "Category";
         public const string PivotsPropertyName = "Pivots";
 
-        private IDictionary<ICategory, ObservableCollection<JokesPivotViewModel>> cachedPages = new Dictionary<ICategory, ObservableCollection<JokesPivotViewModel>>();
+        private IDictionary<string, ObservableCollection<JokesPivotViewModel>> cachedPages = new Dictionary<string, ObservableCollection<JokesPivotViewModel>>();
 
         public JokesPageViewModel(IFunnyJokesDataService funnyJokesDataService, INavigationService navigationService)
             : base(funnyJokesDataService, navigationService)
         {
-            this.LoadedCommand = new RelayCommand(() =>
+            this.OnNavigatedToCommand = new RelayCommand<IDictionary<string, string>>((query) =>
             {
-                if (cachedPages.ContainsKey(Category))
+                if (cachedPages.ContainsKey(Category.ShortName))
                 {
-                    this.Pivots = cachedPages[Category];
+                    this.Pivots = cachedPages[Category.ShortName];
                 }
                 else
                 {
                     this.Pivots = this.createPivots(Category.ShortName);
-                    
                 }
             });
 
@@ -42,6 +41,30 @@ namespace FunnyJokes.ViewModels
         }
 
         public RelayCommand<int> SelectPivotCommand
+        {
+            get;
+            protected set;
+        }
+
+        public RelayCommand<IJoke> LikeCommand
+        {
+            get;
+            protected set;
+        }
+
+        public RelayCommand<IJoke> DislikeCommand
+        {
+            get;
+            protected set;
+        }
+
+        public RelayCommand<IJoke> ShareCommand
+        {
+            get;
+            protected set;
+        }
+
+        public RelayCommand<IJoke> CommentCommand
         {
             get;
             protected set;
@@ -91,6 +114,7 @@ namespace FunnyJokes.ViewModels
             newPivots.Add(new JokesPivotViewModel(Category.ShortName, 7, funnyJokesDataService, navigationService));
             newPivots.Add(new JokesPivotViewModel(Category.ShortName, 30, funnyJokesDataService, navigationService));
             newPivots.Add(new JokesPivotViewModel(Category.ShortName, 300, funnyJokesDataService, navigationService));
+            this.cachedPages[shortCategoryName] = newPivots;
             return newPivots;
         }
 
