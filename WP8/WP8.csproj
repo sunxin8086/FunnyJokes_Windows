@@ -93,9 +93,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AccountTypeConverter.cs" />
     <Compile Include="Converters\DateFormatter.cs" />
+    <Compile Include="Converters\SexConverter.cs" />
     <Compile Include="Converters\ThemeImageConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
+    <Compile Include="FunnyJokesBasePage.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\NavigationService.cs" />
@@ -105,16 +108,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\JokeLikeStatusCache.cs" />
     <Compile Include="ViewModels\FunnyJokesViewModel.cs" />
+    <Compile Include="ViewModels\JokePageViewModel.cs" />
     <Compile Include="ViewModels\JokesPageViewModel.cs" />
     <Compile Include="ViewModels\JokesPivotViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\ProfilePageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\JokePage.xaml.cs">
+      <DependentUpon>JokePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\JokesPage.xaml.cs">
       <DependentUpon>JokesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -235,11 +247,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\JokePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\JokesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
