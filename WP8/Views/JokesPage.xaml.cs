@@ -10,7 +10,7 @@ using Microsoft.Phone.Shell;
 
 namespace WP8.Views
 {
-    public partial class JokesPage : PhoneApplicationPage
+    public partial class JokesPage : FunnyJokesBasePage
     {
         public JokesPage()
         {

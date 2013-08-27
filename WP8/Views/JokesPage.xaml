@@ -1,15 +1,10 @@
-﻿<phone:PhoneApplicationPage
+﻿<local:FunnyJokesBasePage
     x:Class="WP8.Views.JokesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:code4fun="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
-    xmlns:converters="clr-namespace:FunnyJokes.Converters"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-    xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -17,7 +12,13 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
-    DataContext="{Binding JokesPage, Source={StaticResource Locator}}">
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+    xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:code4fun="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:converters="clr-namespace:FunnyJokes.Converters"
+    xmlns:local="clr-namespace:WP8"
+    DataContext="{Binding JokesPageVM, Source={StaticResource Locator}}">
     <phone:PhoneApplicationPage.Resources>
         <converters:VisibilityConverter x:Key="VisibilityConverter"/>
         <converters:ThemeImageConverter x:Key="ThemeImageConverter"/>
@@ -30,13 +31,19 @@
                     <converters:DateFormatter x:Key="FormatConverter" />
                 </Grid.Resources>
                 <StackPanel Orientation="Vertical" Width="440">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Tap">
+                            <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding Mode=OneWay, Source={StaticResource Locator}, Path=JokesPageVM.NavigateToJokePageCommand}"
+                             CommandParameter="{Binding}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <Grid Width="440">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding Username}" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top"/>
+                            <TextBlock Text="{Binding AuthorId}" Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top"/>
                         </StackPanel>
                         <StackPanel Margin="0, 0, 5, 0" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
                             <TextBlock Text="{Binding Created,  Mode=OneWay, Converter={StaticResource FormatConverter}, 
@@ -47,7 +54,7 @@
                         <TextBlock Text="{Binding Content}" Width="440" VerticalAlignment="Top" TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                        <code4fun:RoundButton x:Name="LikeButton" Height="70" Width="70" Content="{Binding LikesNumber}" ImageSource="{Binding Converter={StaticResource ThemeImageConverter}, ConverterParameter='/Images/{0}/thumbup.png'}" />
+                        <code4fun:RoundButton x:Name="LikeButton" Height="70" Width="70"  Content="{Binding LikesNumber}" ImageSource="{Binding Converter={StaticResource ThemeImageConverter}, ConverterParameter='/Images/{0}/thumbup.png'}" />
                         <code4fun:RoundButton x:Name="DislikeButton" Height="70" Width="70" Content="{Binding DislikesNumber}" ImageSource="{Binding Converter={StaticResource ThemeImageConverter}, ConverterParameter='/Images/{0}/thumbdown.png'}"/>
                         <code4fun:RoundButton x:Name="ShareButton" Height="70" Width="70" Content="{Binding SharesNumber}" ImageSource="{Binding Converter={StaticResource ThemeImageConverter}, ConverterParameter='/Images/{0}/share.png'}"/>
                         <code4fun:RoundButton x:Name="CommentButton" Height="70" Width="70" Content="{Binding CommentsNumber}" ImageSource="{Binding Converter={StaticResource ThemeImageConverter}, ConverterParameter='/Images/{0}/comment.png'}"/>
@@ -97,7 +104,7 @@
                 ItemTemplate="{StaticResource JokesTemplate}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <GalaSoft_MvvmLight_Command:EventToCommand Command ="{Binding Source={StaticResource Locator}, Path=JokesPage.SelectPivotCommand}"
+                        <GalaSoft_MvvmLight_Command:EventToCommand Command ="{Binding Source={StaticResource Locator}, Path=JokesPageVM.SelectPivotCommand}"
                                     CommandParameter="{Binding ElementName=JokesPivot, Path=SelectedIndex}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -113,4 +120,4 @@
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
-</phone:PhoneApplicationPage>
+</local:FunnyJokesBasePage>
